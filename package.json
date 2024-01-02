@@ -1,0 +1,23 @@
+{
+  "name": "vue-blog-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritatanght/Vue-blog-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritatanght/Vue-blog-site/issues"
+  },
+  "homepage": "https://github.com/ritatanght/Vue-blog-site#readme",
+  "dependencies": {
+    "vue": "^3.4.3"
+  }
+}

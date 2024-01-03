@@ -35,7 +35,7 @@
 
     <div id="blogPostCreation">
       <h2>Make a new blog post</h2>
-      <input v-model="title"/><br />
+      <input v-model="title" /><br />
       <input v-model="username" /><br />
       <input v-model="date" /><br />
       <input v-model="content" /><br />
@@ -69,6 +69,27 @@
               content: "Here is the content of my second blog post.",
             },
           ],
+        },
+      });
+
+      const postBlogVue = new Vue({
+        el: "#blogPostCreation",
+        data: {
+          title: "",
+          username: "Rita",
+          date: new Date().toDateString().split(" ").slice(1).join(" "),
+          content: "",
+        },
+        methods: {
+          publishPost: function () {
+            const postData = {
+              title: this.title,
+              username: this.username,
+              date: this.date,
+              content: this.content,
+            };
+            blogVue.posts.push(postData);
+          },
         },
       });
     </script>

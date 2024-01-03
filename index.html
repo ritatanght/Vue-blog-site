@@ -4,6 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Site</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <style>
+      html,
+      body {
+        padding: 10px;
+        clear: both;
+        float: left;
+      }
+      #singleBlogPost {
+        padding: 10px;
+        margin-bottom: 50px;
+        border: 2px solid blue;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <h1>Welcome to my Blog Site</h1>
+    <div id="blogPosts">
+      <blog-post v-for="post in posts" v-bind:blogpost="post"></blog-post>
+    </div>
+    <script>
+      Vue.component("blog-post", {
+        props: ["blogpost"],
+        template: `<div id="singleBlogPost">
+        <h2>{{ blogpost.title }}</h2>
+        <h3>{{ blogpost.username }}</h3>
+        <h4>{{ blogpost.date }}</h4>
+        <p>{{ blogpost.content }}</p>
+      </div>`,
+      });
+
+      const blogVue = new Vue({
+        el: "#blogPosts",
+        data: {
+          posts: [
+            {
+              title: "First blog",
+              username: "Rita",
+              date: "Jan 1, 2024",
+              content: "Here is the content of my very first blog post.",
+            },
+            {
+              title: "Second blog",
+              username: "Rita",
+              date: "Jan 2, 2024",
+              content: "Here is the content of my second blog post.",
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
 </html>

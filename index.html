@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Site</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
     <style>
       html,
       body {
@@ -28,70 +27,75 @@
     </style>
   </head>
   <body>
-    <h1>Welcome to my Blog Site</h1>
-    <div id="blogPosts">
-      <blog-post v-for="post in posts" v-bind:blogpost="post"></blog-post>
+    <div id="app">
+      <h1>Welcome to my Blog Site</h1>
+      <div id="blogPosts">
+        <blog-post
+          v-for="post in posts"
+          v-bind:blogpost="post"
+          :key="post.title"
+        ></blog-post>
+      </div>
+
+      <div id="blogPostCreation">
+        <h2>Make a new blog post</h2>
+        <input v-model="title" /><br />
+        <input v-model="username" /><br />
+        <input v-model="date" /><br />
+        <input v-model="content" /><br />
+        <button v-on:click="publishPost">Publish Post</button>
+      </div>
     </div>
-
-    <div id="blogPostCreation">
-      <h2>Make a new blog post</h2>
-      <input v-model="title" /><br />
-      <input v-model="username" /><br />
-      <input v-model="date" /><br />
-      <input v-model="content" /><br />
-      <button v-on:click="publishPost">Publish Post</button>
-    </div>
-    <script>
-      Vue.component("blog-post", {
-        props: ["blogpost"],
-        template: `<div id="singleBlogPost">
-        <h2>{{ blogpost.title }}</h2>
-        <h3>{{ blogpost.username }}</h3>
-        <h4>{{ blogpost.date }}</h4>
-        <p>{{ blogpost.content }}</p>
-      </div>`,
-      });
-
-      const blogVue = new Vue({
-        el: "#blogPosts",
-        data: {
-          posts: [
-            {
-              title: "First blog",
-              username: "Rita",
-              date: "Jan 1, 2024",
-              content: "Here is the content of my very first blog post.",
-            },
-            {
-              title: "Second blog",
-              username: "Rita",
-              date: "Jan 2, 2024",
-              content: "Here is the content of my second blog post.",
-            },
-          ],
-        },
-      });
-
-      const postBlogVue = new Vue({
-        el: "#blogPostCreation",
-        data: {
-          title: "",
-          username: "Rita",
-          date: new Date().toDateString().split(" ").slice(1).join(" "),
-          content: "",
+    <script type="module">
+      import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        data() {
+          return {
+            title: "",
+            username: "Rita",
+            date: new Date().toDateString().split(" ").slice(1).join(" "),
+            content: "",
+            posts: [
+              {
+                title: "First blog",
+                username: "Rita",
+                date: "Jan 1 2024",
+                content: "Here is the content of my very first blog post.",
+              },
+              {
+                title: "Second blog",
+                username: "Rita",
+                date: "Jan 2 2024",
+                content: "Here is the content of my second blog post.",
+              },
+            ],
+          };
         },
         methods: {
-          publishPost: function () {
+          publishPost() {
             const postData = {
               title: this.title,
               username: this.username,
               date: this.date,
               content: this.content,
             };
-            blogVue.posts.push(postData);
+            this.posts.push(postData);
           },
         },
-      });
+        components: {
+          "blog-post": {
+            props: {
+              blogpost: Object,
+            },
+            template: `<div id="singleBlogPost">
+                <h2>{{ blogpost.title }}</h2>
+                <h3>{{ blogpost.username }}</h3>
+                <h4>{{ blogpost.date }}</h4>
+                <p>{{ blogpost.content }}</p>
+                </div>`,
+          },
+        },
+      }).mount("#app");
     </script>
   </body>
 </html>
